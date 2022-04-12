@@ -10,7 +10,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // テスト用のエンドポイント
 app.get('/', (req, res) => {
-    res.status(200).send({ message: 'hello, api sever!' });
+    res.status(200).send({ message: process.env.ROOT_PATH });
 });
 // サーバー接続
 const port = process.env.PORT || 3001;

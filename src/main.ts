@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // テスト用のエンドポイント
 app.get('/', (req, res) => {
-    res.status(200).send({ message: 'hello, api sever!' })
+    res.status(200).send({ message: process.env.ROOT_PATH })
 })
 
 // サーバー接続

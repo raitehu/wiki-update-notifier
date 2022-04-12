@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
         try {
             const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString());
             const title = $("h1").text();
-            res.status(200).send({ message: title });
+            res.status(200).send({ message: title, pages: getPages($) });
         }
         catch (err) {
             console.error(err);
@@ -41,4 +41,15 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log('listen on port:', port);
 });
+function getPages($) {
+    let wikiPages = [];
+    $("#sub .user-area li").each(function () {
+        let wikiPage = {
+            "title": $(this).children().html(),
+            "path": $(this).children().attr("href").replace(process.env.ROOT_PATH, "")
+        };
+        wikiPages.push(wikiPage);
+    });
+    return wikiPages;
+}
 //# sourceMappingURL=main.js.map

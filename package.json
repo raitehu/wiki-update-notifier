@@ -1,0 +1,28 @@
+{
+  "name": "wiki-update-notifier",
+  "version": "1.0.0",
+  "description": "seesaa wikiの更新内容をTwitterに投稿するアプリ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raitehu/wiki-update-notifier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raitehu/wiki-update-notifier/issues"
+  },
+  "homepage": "https://github.com/raitehu/wiki-update-notifier#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.23",
+    "nodemon": "^2.0.15"
+  }
+}

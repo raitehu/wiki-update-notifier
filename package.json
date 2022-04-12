@@ -2,8 +2,13 @@
   "name": "wiki-update-notifier",
   "version": "1.0.0",
   "description": "seesaa wikiの更新内容をTwitterに投稿するアプリ",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "16.13.x",
+    "npm": "8.6.0"
+  },
   "scripts": {
+    "start": "node dist/main.js",
     "dev": "nodemon dist/main.js"
   },
   "repository": {
@@ -11,8 +16,8 @@
     "url": "git+https://github.com/raitehu/wiki-update-notifier.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "KIRISHIMA Raitehu",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/raitehu/wiki-update-notifier/issues"
   },

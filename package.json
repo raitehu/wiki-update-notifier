@@ -23,7 +23,12 @@
   },
   "homepage": "https://github.com/raitehu/wiki-update-notifier#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "cheerio": "^1.0.0-rc.10",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "iconv": "^3.0.1",
+    "jschardet": "^3.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

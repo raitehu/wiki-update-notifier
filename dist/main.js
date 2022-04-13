@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const twitter_api_v2_1 = __importDefault(require("twitter-api-v2"));
 require("dotenv").config();
 const request = require("request");
 const cheerio = require("cheerio");
@@ -13,15 +14,6 @@ const TwApiKey = process.env.API_KEY ? process.env.API_KEY : "";
 const TwApiKeySecret = process.env.API_KEY_SECRET ? process.env.API_KEY_SECRET : "";
 const TwAccessToken = process.env.ACCESS_TOKEN ? process.env.ACCESS_TOKEN : "";
 const TwAccessTokenSecret = process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET : "";
-//import express from "express"
-const twitter_api_v2_1 = __importDefault(require("twitter-api-v2"));
-//const app = express()
-// jsonデータを扱う
-//app.use(express.json())
-//app.use(express.urlencoded({ extended: true }))
-// テスト用のエンドポイント
-//app.get('/', (req, res) => {
-//})
 const options = {
     url: RootPath,
     method: "GET",
@@ -57,16 +49,11 @@ request(options, (err, response, body) => {
             ].flat();
             client.v2.tweet(messages.join("\n"));
         }
-        //res.status(200).send({ message: title , pages: getRecentUpdates($)})
     }
     catch (err) {
         console.error(err);
     }
 });
-//const port = process.env.PORT || 3001
-//app.listen(port, () => {
-//  console.log('listen on port:', port)
-//})
 function getRecentUpdates($) {
     let updatesGroupedByDate = [];
     $("#extra .side-box.recent ul.parent-list").children().each(function () {

@@ -1,3 +1,5 @@
+import Twitter from "twitter-api-v2"
+
 require("dotenv").config()
 
 const request = require("request")
@@ -11,17 +13,6 @@ const TwApiKeySecret: string      = process.env.API_KEY_SECRET ? process.env.API
 const TwAccessToken: string       = process.env.ACCESS_TOKEN ? process.env.ACCESS_TOKEN : ""
 const TwAccessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET : ""
 
-//import express from "express"
-import Twitter from "twitter-api-v2"
-
-//const app = express()
-// jsonデータを扱う
-//app.use(express.json())
-//app.use(express.urlencoded({ extended: true }))
-
-// テスト用のエンドポイント
-//app.get('/', (req, res) => {
-//})
 const options = {
   url: RootPath,
   method: "GET",
@@ -62,17 +53,10 @@ request(options, (err: Error, response: String, body: String) => {
 
       client.v2.tweet(messages.join("\n"))
     }
-
-    //res.status(200).send({ message: title , pages: getRecentUpdates($)})
   } catch (err) {
     console.error(err)
   }
 })
-
-//const port = process.env.PORT || 3001
-//app.listen(port, () => {
-//  console.log('listen on port:', port)
-//})
 
 function getRecentUpdates($: any): Updates[] {
   let updatesGroupedByDate: Updates[] = []

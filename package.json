@@ -29,6 +29,7 @@
     "iconv": "^3.0.1",
     "jschardet": "^3.0.0",
     "moment": "^2.29.2",
+    "moment-timezone": "^0.5.34",
     "request": "^2.88.2",
     "twitter-api-v2": "^1.12.0"
   },

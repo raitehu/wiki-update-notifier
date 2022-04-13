@@ -30,6 +30,14 @@ app.get('/', (req, res) => {
     try {
       const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString())
       const title = $("h1").text()
+      const yesterday: String = moment().add(-1, "days").format("YYYY-MM-DD")
+      let yesterdayUpdates = getSpecificDateUpdates(yesterday, getRecentUpdates($))
+
+      if (yesterdayUpdates.length) {
+        // 投稿用の文字列の構築
+        // Twitterへの投稿
+      }
+
       res.status(200).send({ message: title , pages: getRecentUpdates($)})
     } catch (err) {
       console.error(err)
@@ -56,28 +64,47 @@ function getPages($: any): Array<object> {
   return wikiPages
 }
 
-function getRecentUpdates($: any): Array<object> {
-  let updatesGroupedByDate: Array<object> = []
+function getRecentUpdates($: any): Updates[] {
+  let updatesGroupedByDate: Updates[] = []
 
   $("#extra .side-box.recent ul.parent-list").children().each(function(this: String) {
     const date = $(this).find("h3").text()
-    const pages: Array<object> = []
+    let pages: Page[] = []
 
     $(this).find("ul.child-list").children().each(function(this: String) {
       const aTag = $(this).find("a")
-      const page = {
-        "title": aTag.html(),
-        "url":   aTag.attr("href")
+      let page: Page = {
+        title: aTag.html(),
+        url: aTag.attr("href")
       }
       pages.push(page)
     })
 
-    let updates = {
-      "date":  date,
-      "pages": pages
+    let updates: Updates = {
+      date: date,
+      pages: pages
     }
     updatesGroupedByDate.push(updates)
   })
 
   return updatesGroupedByDate
+}
+
+function getSpecificDateUpdates(date: String, updates: Updates[]): Page[] | [] {
+  const found = updates.find(updates => updates.date == date)
+  if (found) {
+    return found.pages
+  } else {
+    return []
+  }
+}
+
+type Page = {
+  title: String
+  url : String
+}
+
+type Updates = {
+  date: String
+  pages: Page[]
 }

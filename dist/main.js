@@ -29,6 +29,12 @@ app.get('/', (req, res) => {
         try {
             const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString());
             const title = $("h1").text();
+            const yesterday = moment().add(-1, "days").format("YYYY-MM-DD");
+            let yesterdayUpdates = getSpecificDateUpdates(yesterday, getRecentUpdates($));
+            if (yesterdayUpdates.length) {
+                // 投稿用の文字列の構築
+                // Twitterへの投稿
+            }
             res.status(200).send({ message: title, pages: getRecentUpdates($) });
         }
         catch (err) {
@@ -56,21 +62,30 @@ function getRecentUpdates($) {
     let updatesGroupedByDate = [];
     $("#extra .side-box.recent ul.parent-list").children().each(function () {
         const date = $(this).find("h3").text();
-        const pages = [];
+        let pages = [];
         $(this).find("ul.child-list").children().each(function () {
             const aTag = $(this).find("a");
-            const page = {
-                "title": aTag.html(),
-                "url": aTag.attr("href")
+            let page = {
+                title: aTag.html(),
+                url: aTag.attr("href")
             };
             pages.push(page);
         });
         let updates = {
-            "date": date,
-            "pages": pages
+            date: date,
+            pages: pages
         };
         updatesGroupedByDate.push(updates);
     });
     return updatesGroupedByDate;
+}
+function getSpecificDateUpdates(date, updates) {
+    const found = updates.find(updates => updates.date == date);
+    if (found) {
+        return found.pages;
+    }
+    else {
+        return [];
+    }
 }
 //# sourceMappingURL=main.js.map

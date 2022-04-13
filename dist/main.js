@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
         try {
             const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString());
             const title = $("h1").text();
-            res.status(200).send({ message: title, pages: getPages($) });
+            res.status(200).send({ message: title, pages: getRecentUpdates($) });
         }
         catch (err) {
             console.error(err);
@@ -51,5 +51,26 @@ function getPages($) {
         wikiPages.push(wikiPage);
     });
     return wikiPages;
+}
+function getRecentUpdates($) {
+    let updatesGroupedByDate = [];
+    $("#extra .side-box.recent ul.parent-list").children().each(function () {
+        const date = $(this).find("h3").text();
+        const pages = [];
+        $(this).find("ul.child-list").children().each(function () {
+            const aTag = $(this).find("a");
+            const page = {
+                "title": aTag.html(),
+                "url": aTag.attr("href")
+            };
+            pages.push(page);
+        });
+        let updates = {
+            "date": date,
+            "pages": pages
+        };
+        updatesGroupedByDate.push(updates);
+    });
+    return updatesGroupedByDate;
 }
 //# sourceMappingURL=main.js.map

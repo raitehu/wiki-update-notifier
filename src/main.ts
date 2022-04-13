@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
     try {
       const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString())
       const title = $("h1").text()
-      res.status(200).send({ message: title , pages: getPages($)})
+      res.status(200).send({ message: title , pages: getRecentUpdates($)})
     } catch (err) {
       console.error(err)
     }
@@ -46,7 +46,7 @@ app.listen(port, () => {
 function getPages($: any): Array<object> {
   let wikiPages: Array<object> = []
 
-  $("#sub .user-area li").each(function() {
+  $("#sub .user-area li").each(function(this: String) {
     let wikiPage = {
       "title": $(this).children().html(),
       "path" : $(this).children().attr("href").replace(process.env.ROOT_PATH, "")
@@ -54,4 +54,30 @@ function getPages($: any): Array<object> {
     wikiPages.push(wikiPage)
   })
   return wikiPages
+}
+
+function getRecentUpdates($: any): Array<object> {
+  let updatesGroupedByDate: Array<object> = []
+
+  $("#extra .side-box.recent ul.parent-list").children().each(function(this: String) {
+    const date = $(this).find("h3").text()
+    const pages: Array<object> = []
+
+    $(this).find("ul.child-list").children().each(function(this: String) {
+      const aTag = $(this).find("a")
+      const page = {
+        "title": aTag.html(),
+        "url":   aTag.attr("href")
+      }
+      pages.push(page)
+    })
+
+    let updates = {
+      "date":  date,
+      "pages": pages
+    }
+    updatesGroupedByDate.push(updates)
+  })
+
+  return updatesGroupedByDate
 }

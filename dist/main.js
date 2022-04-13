@@ -29,6 +29,12 @@ app.get('/', (req, res) => {
         try {
             const $ = cheerio.load(new Iconv("euc-jp", "UTF-8//TRANSLIT//IGNORE").convert(body).toString());
             const title = $("h1").text();
+            const yesterday = moment().add(-1, "days").format("YYYY-MM-DD");
+            let yesterdayUpdates = getSpecificDateUpdates(yesterday, getRecentUpdates($));
+            if (yesterdayUpdates.length) {
+                // 投稿用の文字列の構築
+                // Twitterへの投稿
+            }
             res.status(200).send({ message: title, pages: getRecentUpdates($) });
         }
         catch (err) {

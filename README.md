@@ -2,21 +2,26 @@
 
 ## 主な処理の概要
 
-1. 環境変数 `ROOT_PATH` で指定されたURLにアクセスする
-2. メニュー欄 `id="sub" > class="user-area"` に含まれるURLを取得する
-   - ページタイトル: aタグで囲まれた文字列
-   - path: aタグのhref対象からROOT_PATHを引いた文字列
-3. pathをkeyとしてDBを検索する
-   - DBにキーが存在しない場合
-      1. `class="page-body" > class="user-area"` 内のDOMをvalueとして登録
-      2. ページタイトルを新規ページとして保持
-   - DBにキーが存在する 且つ 突合の結果差異がある場合
-      1. ページタイトルを変更ページとして保持
-4. 新規ページ・変更ページが存在する場合、Twitterに投稿をする
+1. 環境変数 `ROOT_PATH` で指定されたseesaa wikiのURLにアクセスする
+2. 「最近更新したページ」を取得
+3. 起動時刻の前日に更新したページが存在していた場合APIキーに紐づくアカウントでツイートする
+
+## ツイートフォーマット
+
+```plain
+🎪VALIS非公式wiki更新情報🎪
+YYYY-MM-DDに以下のページが更新されました
+・${更新されたページタイトル}
+・${更新されたページタイトル}
+是非遊びに来てください!!
+```
 
 ## 環境変数
 
 | key | type | description |
 | --- | ---- | ----------- |
 | ROOT_PATH | String | wikiのルートパス。トレイリングスラッシュも含む |
-| TW_TOKEN | String | Twitter投稿用のアクセストークン |
+| API_KEY | String | Twitter投稿用APIキー |
+| API_KEY_SECRET | String | Twitter投稿用APIキーのシークレット |
+| ACCESS_TOKEN | String | Twitterアクセストークン |
+| ACCESS_TOKEN_SECRET | String | Twitterアクセストークンのシークレット |

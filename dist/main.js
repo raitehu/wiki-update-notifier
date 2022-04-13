@@ -56,21 +56,30 @@ function getRecentUpdates($) {
     let updatesGroupedByDate = [];
     $("#extra .side-box.recent ul.parent-list").children().each(function () {
         const date = $(this).find("h3").text();
-        const pages = [];
+        let pages = [];
         $(this).find("ul.child-list").children().each(function () {
             const aTag = $(this).find("a");
-            const page = {
-                "title": aTag.html(),
-                "url": aTag.attr("href")
+            let page = {
+                title: aTag.html(),
+                url: aTag.attr("href")
             };
             pages.push(page);
         });
         let updates = {
-            "date": date,
-            "pages": pages
+            date: date,
+            pages: pages
         };
         updatesGroupedByDate.push(updates);
     });
     return updatesGroupedByDate;
+}
+function getSpecificDateUpdates(date, updates) {
+    const found = updates.find(updates => updates.date == date);
+    if (found) {
+        return found.pages;
+    }
+    else {
+        return [];
+    }
 }
 //# sourceMappingURL=main.js.map

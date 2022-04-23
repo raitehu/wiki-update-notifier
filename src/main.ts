@@ -7,8 +7,7 @@ const cheerio = require("cheerio")
 const Iconv   = require("iconv").Iconv
 const moment  = require("moment-timezone")
 
-const yesterday: string           = "2022-04-23"
-//const yesterday: string           = moment().tz("Asia/Tokyo").add(-1, "days").format("YYYY-MM-DD")
+const yesterday: string           = moment().tz("Asia/Tokyo").add(-1, "days").format("YYYY-MM-DD")
 const RootPath: string            = process.env.ROOT_PATH ? process.env.ROOT_PATH : ""
 const TwApiKey: string            = process.env.API_KEY ? process.env.API_KEY : ""
 const TwApiKeySecret: string      = process.env.API_KEY_SECRET ? process.env.API_KEY_SECRET : ""

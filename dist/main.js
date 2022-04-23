@@ -47,7 +47,6 @@ function buildMessage(date, yesterdayUpdates) {
     let singleTweetMessagesArray = [];
     let multipleTweetMessagesArray = [];
     messageArray.forEach(function (message, index) {
-        console.log(`- ${message}`);
         const addedCaseMessageLength = singleTweetMessagesArray.join('\n').length + message.length + postTime.length;
         if (addedCaseMessageLength <= TweetMessageLimit) {
             // 追加してもツイート長を超えない場合、追加する

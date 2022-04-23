@@ -1,5 +1,7 @@
 # wiki-update-notifier
 
+![](./cover_image.png)
+
 ## 主な処理の概要
 
 1. 環境変数 `ROOT_PATH` で指定されたseesaa wikiのURLにアクセスする
